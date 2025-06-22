@@ -19,6 +19,7 @@
     "@dark-yasiya/scrap": "1.0.1",
     "@dark-yasiya/yt-dl.js": "latest",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@chatgptweb/chatgpt-api" :"latest",
     "@mrnima/facebook-downloader": "1.0.0",
     "@mrnima/tiktok-downloader": "1.0.0",
     "@vitalets/google-translate-api": "^9.2.0",
