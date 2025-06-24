@@ -64,7 +64,7 @@
     "sequelize": "^6.37.5",
     "sqlite3": "latest",
     "util": "^0.12.4",
-    "vm": "^0.1.0",
+    "vm2": "^3.9.17",
     "wa-sticker-formatter": "^4.4.4",
     "wa_set_pkg": "1.0.5",
     "@octokit/rest": "^20.0.0",
