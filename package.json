@@ -68,6 +68,6 @@
     "wa-sticker-formatter": "^4.4.4",
     "wa_set_pkg": "1.0.5",
     "@octokit/rest": "^20.0.0",
-    "yt-search": "2.11.1"
+    "yt-search": "*"
   }
 }
