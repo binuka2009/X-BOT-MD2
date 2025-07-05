@@ -1,24 +1,20 @@
-# Use an official Node.js runtime
+# Use official Node.js LTS image
 FROM node:lts
 
-# Set working directory
+# Create app directory
 WORKDIR /app
 
-# Copy only package files first (layer cache)
+# Copy dependency definitions
 COPY package*.json ./
 
-# Install dependencies and PM2 globally (optional if not used)
+# Install dependencies & PM2 globally
 RUN npm install && npm install -g pm2
 
-# Copy the rest of your code
+# Copy all files to the container
 COPY . .
 
-# Optional: Expose port only if you use a web server
-# EXPOSE 9090
+# Set NODE_ENV to production
+ENV NODE_ENV=production
 
-# Run the bot (choose one option)
-# Option 1: Use pm2
-# CMD ["pm2-runtime", "index.js"]
-
-# Option 2: Use plain Node.js
-CMD ["node", "index.js"]
+# Start the bot using PM2 and your package.json start script
+CMD ["npm", "start"]
