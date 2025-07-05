@@ -4,48 +4,32 @@
   "logo": "https://files.catbox.moe/06cgye.jpg",
   "keywords": ["X-BOT-MD"],
   "success_url": "/",
-
-    "stack": "container",
+  "stack": "container",
   "env": {
     "SESSION_ID": {
       "description": "Put the session-id here.",
       "required": true,
       "value": ""
-    },  
-    
-    
+    },
     "MODE": {
-      "description": "select your bot work type public-private-inbox-group.",
+      "description": "Select your bot work type: public, private, inbox, or group.",
       "required": false,
       "value": "public"
-      
     },
-        "AUTO_STATUS_SEEN": {
+    "AUTO_STATUS_SEEN": {
       "description": "Make it true for automatic status seen.",
       "required": true,
       "value": "false"
-    }, 
-
+    },
     "AUTO_STATUS_REACT": {
-      "description": "make it true for automatic status reaction or like.",
+      "description": "Make it true for automatic status reaction or like.",
       "required": true,
       "value": "false"
-    }, 
-
+    },
     "ANTI_LINK": {
-      "description": "Make it true if you want bot auto remove group link.",
+      "description": "Make it true if you want the bot to auto-remove group links.",
       "required": true,
       "value": "false"
-      
     }
-
-},
-
-     "buildpacks": [
-        {
-            "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
-        }
-     ],
-  "stack": "heroku-24"
+  }
 }
-  
