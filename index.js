@@ -188,27 +188,28 @@ async function loadSession() {
 }
 
 //=========SESSION-AUTH====================
-
 async function connectToWA() {
     console.log("Connecting to WhatsApp ⏳️...");
     
-    const credload = await loadSession();
+    const creds = await loadSession();
     
-    const { state, saveCreds } = await useMultiFileAuthState(sessionDir), {
-        creds: credload || undefined // Pass loaded creds if available
-    });
+    const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
     
     const { version } = await fetchLatestBaileysVersion();
     
     const conn = makeWASocket({
         logger: P({ level: 'silent' }),
-        printQRInTerminal: !creds, // Only show QR if no session loaded
+        printQRInTerminal: !credload,
         browser: Browsers.macOS("Firefox"),
         syncFullHistory: true,
-        auth: state,
+        auth: {
+            creds: creds || state.creds,
+            keys: state.keys
+        },
         version,
         getMessage: async () => ({})
     });
+
     
     // ... rest of your existing connectToWA code ...
 
