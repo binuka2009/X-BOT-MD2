@@ -1,5 +1,5 @@
 {
-  "name": "xbot-md",
+  "name": "XBOT-MD",
   "version": "3.0.9",
   "description": "Not the best bot in the universe, but enjoyment is promising. WhatsApp multi-feature bot using Baileys.",
   "main": "index.js",
@@ -8,11 +8,12 @@
     "npm": ">=10.x"
   },
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name XBOT-MD",
-    "stop": "pm2 stop XBOT-MD",
-    "restart": "pm2 restart XBOT-MD",
-    "dev": "nodemon index.js"
-  },
+  "start": "node index.js",
+  "dev": "nodemon index.js",
+  "pm2": "pm2 start index.js --deep-monitoring --attach --name XBOT-MD",
+  "stop": "pm2 stop XBOT-MD",
+  "restart": "pm2 restart XBOT-MD"
+},
   "keywords": [
     "whatsapp-bot",
     "whatsapp-md",
