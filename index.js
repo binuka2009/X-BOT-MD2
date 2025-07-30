@@ -192,10 +192,10 @@ async function loadSession() {
 async function connectToWA() {
     console.log("Connecting to WhatsApp ⏳️...");
     
-    const creds = await loadSession();
+    const credload = await loadSession();
     
     const { state, saveCreds } = await useMultiFileAuthState(sessionDir), {
-        creds: creds || undefined // Pass loaded creds if available
+        creds: credload || undefined // Pass loaded creds if available
     });
     
     const { version } = await fetchLatestBaileysVersion();
