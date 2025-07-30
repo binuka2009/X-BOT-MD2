@@ -196,7 +196,7 @@ async function connectToWA() {
 
   // Baileys handles merging downloaded creds into auth state
   const { state, saveCreds } = await useMultiFileAuthState(sessionDir, {
-    creds: creds || undefined
+    creds: undefined
   });
 
   const { version } = await fetchLatestBaileysVersion();
