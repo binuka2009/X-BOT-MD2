@@ -202,10 +202,7 @@ async function connectToWA() {
         printQRInTerminal: !creds,
         browser: Browsers.macOS("Firefox"),
         syncFullHistory: true,
-        auth: {
-            creds: creds || state.creds,
-            keys: state.keys
-        },
+        auth: state,
         version,
         getMessage: async () => ({})
     });
