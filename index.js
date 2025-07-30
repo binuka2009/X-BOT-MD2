@@ -111,12 +111,17 @@ const app = express();
 const port = process.env.PORT || 7860;
   
   //===================SESSION-AUTH============================
-const sessionDir = path.join(__dirname, 'sessions');
+const sessionDir = fs.existsSync('/tmp') ? path.join('/tmp', 'sessions') : path.join(__dirname, 'sessions');
 const credsPath = path.join(sessionDir, 'creds.json');
 
-// Create session directory if it doesn't exist
 if (!fs.existsSync(sessionDir)) {
-    fs.mkdirSync(sessionDir, { recursive: true });
+    try {
+        fs.mkdirSync(sessionDir, { recursive: true });
+        console.log('[✓] Session directory created at:', sessionDir);
+    } catch (err) {
+        console.error('❌ Failed to create session directory:', err.message);
+        process.exit(1);
+    }
 }
 
 async function loadSession() {
