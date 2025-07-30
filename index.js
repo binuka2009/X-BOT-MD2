@@ -112,7 +112,7 @@ const port = process.env.PORT || 7860;
   
   //===================SESSION-AUTH============================
 const sessionDir = fs.existsSync('/lib') ? path.join('/lib', 'sessions') : path.join(__dirname, 'sessions');
-const credsPath = '/lib/sessions/creds.json;
+const credsPath = '/lib/sessions/creds.json';
 
 if (!fs.existsSync(sessionDir)) {
     try {
