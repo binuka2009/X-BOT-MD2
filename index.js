@@ -1083,7 +1083,7 @@ app.get("/", (req, res) => {
       </html>
     `);
   });
-  app.listen(port, () => console.log(`Service active and running please give some credits 🙂`));
+  app.listen(port, () => console.log(`Service active and running on port http://localhost:${port} please give some credits 🙂`));
   setTimeout(() => {
   connectToWA()
   }, 4000);
