@@ -189,91 +189,75 @@ async function loadSession() {
 
 //=========SESSION-AUTH====================
 async function connectToWA() {
-    console.log("Connecting to WhatsApp ⏳️...");
-    
-    const creds = await loadSession();
-    
-    const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
-    
-    const { version } = await fetchLatestBaileysVersion();
-    
-    const conn = makeWASocket({
-        logger: P({ level: 'silent' }),
-        printQRInTerminal: !creds,
-        browser: Browsers.macOS("Firefox"),
-        syncFullHistory: true,
-        auth: state,
-        version,
-        getMessage: async () => ({})
-    });
+  console.log('📩 Connecting to WhatsApp...');
 
-    
-    // ... rest of your existing connectToWA code ...
+  // Load creds from session source (Supabase, Xcall, MEGA)
+  const creds = await loadSession();
 
-	
-    let startupSent = false;
+  // Baileys handles merging downloaded creds into auth state
+  const { state, saveCreds } = await useMultiFileAuthState(sessionDir, {
+    creds: creds || undefined
+  });
 
-conn.ev.on('connection.update', async (update) => {
-  const { connection, lastDisconnect, qr } = update;
+  const { version } = await fetchLatestBaileysVersion();
 
-  if (connection === 'close') {
-    if (lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut) {
-      console.log('Connection lost, reconnecting...');
-      setTimeout(connectToWA, 5000);
-    } else {
-      console.log('Connection closed, please change session ID');
+  const conn = makeWASocket({
+    logger: P({ level: 'silent' }),
+    printQRInTerminal: !creds, // show QR if no session
+    browser: Browsers.macOS('Firefox'),
+    syncFullHistory: true,
+    auth: state, // now using only proper full state
+    version,
+    getMessage: async () => ({})
+  });
+
+  let startupSent = false;
+
+  conn.ev.on('connection.update', async (update) => {
+    const { connection, lastDisconnect, qr } = update;
+
+    if (connection === 'close') {
+      const reason = lastDisconnect?.error?.output?.statusCode;
+      if (reason !== DisconnectReason.loggedOut) {
+        console.log('⚠️ Connection lost, reconnecting...');
+        setTimeout(connectToWA, 5000);
+      } else {
+        console.log('🔒 Logged out — please change session ID');
+      }
     }
-  } else if (connection === 'open' && !startupSent) {
-    startupSent = true;
-    console.log('✅ XBOT-MD Connected Successfully');
 
-	              // Load plugins
-            const pluginPath = path.join(__dirname, 'plugins');
-            fs.readdirSync(pluginPath).forEach((plugin) => {
-                if (path.extname(plugin).toLowerCase() === ".js") {
-                    require(path.join(pluginPath, plugin));
-                }
-            });
-            console.log('Plugins installed successfully ✅');
+    if (connection === 'open' && !startupSent) {
+      startupSent = true;
+      console.log('✅ Connected to WhatsApp successfully');
 
-    try {
-      const upMessage = `*🤖 X-BOT-MD is Online!*
-
-` +
-        `✨ A powerful multipurpose WhatsApp bot.
-
-` +
-        `🔗 *GitHub:* github.com/Mek-d1/X-BOT-MD
-` +
-        `📢 *Channel:* https://whatsapp.com/channel/0029VbAsXu9G8l58euAhew3f
-` +
-        `💬 *Group:* https://chat.whatsapp.com/HpPLRd2mTMBHJDu6riMt3m?mode=ac_t
-
-` +
-        `🔧 *Mode:* ${config.MODE}
-` +
-        `📍 *Prefix:* ${prefix}
-
-` +
-        `🔋 Powered by *DavidX*`;
-
-      await conn.sendMessage(conn.user.id, {
-        image: { url: `https://i.postimg.cc/rFV2pJW5/IMG-20250603-WA0017.jpg` },
-        caption: upMessage
+      // ✅ Load plugins
+      const pluginPath = path.join(__dirname, 'plugins');
+      fs.readdirSync(pluginPath).forEach((file) => {
+        if (file.endsWith('.js')) {
+          require(path.join(pluginPath, file));
+        }
       });
+      console.log('✅ Plugins loaded');
 
-    } catch (sendError) {
-      console.error('❌ Error sending startup message:', sendError);
+      // ✅ Send startup message
+      try {
+        const upMessage = `*🤖 X-BOT-MD is Online!*\n\n✨ Powerful multipurpose bot\n🔧 *Mode:* ${config.MODE}\n📍 *Prefix:* ${prefix}\n🔋 Powered by *DavidX*`;
+        await conn.sendMessage(conn.user.id, {
+          image: { url: 'https://i.postimg.cc/rFV2pJW5/IMG-20250603-WA0017.jpg' },
+          caption: upMessage
+        });
+      } catch (err) {
+        console.error('❌ Failed to send startup message:', err);
+      }
     }
-  }
 
-  if (qr) {
-    console.log('Scan the QR code to connect or use session ID');
-    qrcode.generate(qr, { small: true });
-  }
-});
+    if (qr) {
+      console.log('📷 Scan the QR code to connect:');
+      qrcode.generate(qr, { small: true });
+    }
+  });
 
-    conn.ev.on('creds.update', saveCreds);
+  conn.ev.on('creds.update', saveCreds);
     
 // =====================================
 	 
