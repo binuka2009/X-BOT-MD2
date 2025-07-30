@@ -1,10 +1,10 @@
 {
   "name": "XBOT-MD",
   "description": "Javascript WhatsApp bot made by DavidX",
-  "logo": "https://files.catbox.moe/06cgye.jpg",
-  "keywords": ["X-BOT-MD"],
+  "logo": "https://i.postimg.cc/rFV2pJW5/IMG-20250603-WA0017.jpg",
+"keywords": ["bot", "node", "baileys", "whatsapp"],
   "success_url": "/",
-  "stack": "container",
+  "stack": "heroku-24",
   "env": {
     "SESSION_ID": {
       "description": "Put the session-id here.",
@@ -42,6 +42,5 @@
     {
       "url": "heroku/nodejs"
     }
-  ],
-  "stack": "heroku-24"
+  ]
 }
