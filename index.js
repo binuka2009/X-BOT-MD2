@@ -194,7 +194,7 @@ async function connectToWA() {
     
     const creds = await loadSession();
     
-    const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'sessions'), {
+    const { state, saveCreds } = await useMultiFileAuthState(sessionDir), {
         creds: creds || undefined // Pass loaded creds if available
     });
     
