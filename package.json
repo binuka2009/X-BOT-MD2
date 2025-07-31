@@ -41,7 +41,7 @@
     "adm-zip": "^0.5.16",
     "api-dylux": "1.8.5",
     "axios": "^1.7.9",
-    "baileys": "npm:visper-baileys@latest",
+    "baileys": "npm:gifted-baileys@latest",
     "btch-downloader": "^2.2.9",
     "buffer": "^6.0.3",
     "canvacord": "^5.4.9",
