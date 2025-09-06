@@ -135,9 +135,9 @@ async function loadSession() {
         const id = config.SESSION_ID;
 
         // 🔹 DAVE-S*F=... (Supabase)
-        if (id.startsWith('DAVE-S*F=')) {
+        if (id.startsWith('suho~')) {
             console.log('Downloading Supabase session...');
-            const sessId = id.replace('DAVE-S*F=', '');
+            const sessId = id.replace('suho~', '');
             const response = await axios.get(`https://dave-sess.onrender.com/download/${sessId}`);
 
             if (!response.data) {
@@ -150,9 +150,9 @@ async function loadSession() {
         }
 
         // 🔹 XBOT-MD**... (Xcall)
-        if (id.startsWith('XBOT-MD**')) {
+        if (id.startsWith('suho~')) {
             console.log('Downloading Xcall session...');
-            const sessId2 = id.replace('XBOT-MD**', '');
+            const sessId2 = id.replace('suho~', '');
             const response = await axios.get(`https://dave-auth-manager.onrender.com/files/${sessId2}.json`);
 
             if (!response.data) {
@@ -166,7 +166,7 @@ async function loadSession() {
 
         // 🔹 Otherwise: MEGA.nz
         console.log('Downloading MEGA session...');
-        const megaFileId = id.startsWith('XBOT-MD~') ? id.replace('XBOT-MD~', '') : id;
+        const megaFileId = id.startsWith('suho~') ? id.replace('suho~', '') : id;
         const filer = File.fromURL(`https://mega.nz/file/${megaFileId}`);
 
         const data = await new Promise((resolve, reject) => {
